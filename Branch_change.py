@@ -30,14 +30,29 @@ with open("input_programmes.csv") as inputfile :
 with open("input_options.csv") as inputfile:
 	reader = csv.reader(inputfile)
 	for rows in reader:
-                choices = []
+		choices = []
 		roll_number = rows[0]
 		name = rows[1]
 		dept = rows[2]
 		cpi = rows[3]
-        	choices.append(filter(None, rows[5:]))
-                temporary_student = Student(dept,dept,cpi,choices,name,roll_number)
-                students.append(temporary_student)
+		choices = (filter(None, rows[5:]))
+		temporary_student = Student(dept,dept,cpi,choices,name,roll_number)
+		students.append(temporary_student)
+
+students.sort(key=lambda x: x.cpi, reverse=True)
+
+for i in students:
+	print i.old_department + " " + i.name + " " + str(i.cpi) + " " + roll_number
+	print i.pref_list
+print len(students)
+
+for i in capacity:
+	print i + " " + capacity[i]
+
+def swap(Student s, str s1, str s2):
+	strength[s1]-=1
+	strength[s2]+=1
+	
 
 #students.sort(key=.get)
 #print students
