@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Branch Change Portal{% endblock %}
+{% block head %}Welcome to the Branch Change Portal of IITB{% endblock %}
+{% block content %}
+    <p>Welcome </p>
+    <p>Enter your Branch Change Details</p>
+    <form action="/fillform/" method="post">
+    {% csrf_token %}
+    {{ s.as_p }}
+    <input type="submit" value="Submit" />
+	</form>
+    <a href="/logout/">Logout</a>
+{% endblock %}
