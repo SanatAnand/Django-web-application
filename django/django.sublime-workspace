@@ -4,6 +4,10 @@
 		"selected_items":
 		[
 			[
+				"re",
+				"request"
+			],
+			[
 				"y",
 				"y"
 			],
@@ -62,8 +66,23 @@
 		"side_bar_visible": false,
 		"status_bar_visible": false
 	},
+	"expanded_folders":
+	[
+		"/users/ug14/siddhant/Desktop/Branch_Change/django/src",
+		"/users/ug14/siddhant/Desktop/Branch_Change/django/src/branchchange",
+		"/users/ug14/siddhant/Desktop/Branch_Change/django/src/django1"
+	],
 	"file_history":
 	[
+		"/users/ug14/siddhant/Desktop/Branch_Change/django/src/branchchange/templates/home.html",
+		"/users/ug14/siddhant/Desktop/Branch_Change/django/src/branchchange/views.py",
+		"/users/ug14/siddhant/Desktop/Branch_Change/django/src/branchchange/forms.py",
+		"/users/ug14/siddhant/Desktop/Branch_Change/django/src/branchchange/admin.py",
+		"/users/ug14/siddhant/Desktop/Branch_Change/django/src/branchchange/models.py",
+		"/users/ug14/siddhant/Desktop/Branch_Change/django/src/branchchange/templates/styles.css",
+		"/users/ug14/siddhant/Desktop/Branch_Change/django/src/django1/urls.py",
+		"/users/ug14/siddhant/Desktop/Branch_Change/django/src/django1/settings.py",
+		"/users/ug14/siddhant/Desktop/Branch_Change/django/src/django1/views.py",
 		"/users/ug14/siddhant/Desktop/Rube-Goldberg/cs251_base_code/src/dominos.cpp",
 		"/users/ug14/siddhant/Desktop/cs251_base_code/src/dominos.cpp",
 		"/users/ug14/siddhant/Desktop/cs251_base_code/references.bib",
@@ -126,7 +145,7 @@
 	},
 	"input":
 	{
-		"height": 0.0
+		"height": 29.0
 	},
 	"layout":
 	{
