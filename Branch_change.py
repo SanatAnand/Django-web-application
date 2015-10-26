@@ -73,7 +73,7 @@ def swap(s,s1):
 	s.pref_list = temp_list
 
 def valid_shift(s,s1):
-        if (strength[s.current_department] -1 >= round(0.75 * capacity[s.current_department]) ) and ( strength[s1] + 1 <= round(1.1 * capacity[s1]) ):
+        if (strength[s.current_department] -1 >= int(0.75 * capacity[s.current_department]) ) and ( strength[s1] + 1 <= int(1.1 * capacity[s1]) ):
                 return True
         return False
 
@@ -89,6 +89,18 @@ def check_waiting_list(dept):
                         check_waiting_list(temp_dept)
                 return
 
+def check_outgoing_list(dept):
+        if outgoing_list[dept] == []:
+                return
+        else :
+                while outgoing_list[dept] is not [] and valid_shift(outgoing_list[dept][0],dept):
+                        temp_dept = waiting_list[dept][0].current_department
+                        swap(waiting_list[dept][0],dept)
+                        temp_stu = waiting_list[dept][0]
+                        waiting_list[dept] = waiting_list[dept][1:]
+                        check_waiting_list(temp_dept)
+                return
+        
 for stu in students:
         i=0
         while i< len(stu.pref_list) and not valid_shift(stu,stu.pref_list[i]):
@@ -99,6 +111,7 @@ for stu in students:
                 temp_department = stu.current_department
                 swap(stu,stu.pref_list[i])
                 check_waiting_list(temp_department)
+        outgoing_list[stu.current_department].append(stu)
         #print stu.name + ' ' + stu.old_department + ' ' + stu.current_department + ' '
         #print stu.pref_list
 
