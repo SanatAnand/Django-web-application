@@ -9,6 +9,7 @@ original_strength = {}
 students = []
 cut_offs = {}
 final_matrix = []
+dept_matrix = []
 
 class Student:
 	'''Class For the Students'''
@@ -38,7 +39,7 @@ with open("input_programmes.csv") as inputfile :
 		capacity[rows[0]] = float(rows[1])
 		strength[rows[0]] = float(rows[2])
 		original_strength[rows[0]] = float(rows[2])
-		cut_offs[rows[0]] = float(10)
+		cut_offs[rows[0]] = float(11)
 		#waiting_list[rows[0]] = []
 		#outgoing_list[rows[0]] = []
 
@@ -165,6 +166,12 @@ print "======================================================================="
 
 for i in strength:
 	print i + " " + str(original_strength[i]) + " " + str(strength[i])
+dept_matrix.append(["Program", "Cutoff","Santioned Strength","Original Strength","Final Strength"])
+for dep in cut_offs:
+	if(int(cut_offs[dep]) is int(11)):
+		dept_matrix.append([dep,"NA",capacity[dep],original_strength[dep],strength[dep]])
+	else:
+		dept_matrix.append([dep,cut_offs[dep],capacity[dep],original_strength[dep],strength[dep]])
 
 for stu in students:
 	if stu.old_department == stu.current_department:
@@ -174,6 +181,9 @@ for stu in students:
 	final_matrix.append([stu.roll_number,stu.name,stu.old_department,stu.current_department])
 
 final_matrix.sort(key=lambda x: (x[0], x[1].lower(),x[2]))
+with open('stats.csv','wb') as output_file:
+	writer = csv.writer(output_file, delimiter=',')
+	writer.writerows(dept_matrix)
 
 with open('output.csv', 'wb') as output_file:
 		writer = csv.writer(output_file, delimiter=',')
