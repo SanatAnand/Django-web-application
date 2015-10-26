@@ -5,5 +5,5 @@ class InitialForm(models.Model):
 	username = models.CharField(max_length=100, blank=True, null=True)
 	password = models.CharField(max_length=100, blank=True, null=True)
 
-	def __str__(self):
+	def __unicode__(self):
 		return self
