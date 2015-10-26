@@ -7,6 +7,8 @@ urlpatterns = [
     url(r'^home/userlogin$', 'branchchange.views.userloginview', name='userloginview'),
     url(r'^home/adminlogin$', 'branchchange.views.adminloginview', name='adminloginview'),
     url(r'^home/register$', 'branchchange.views.registerview', name='registerview'),
+    url(r'^home/userlogin/portal$', 'branchchange.views.branchchangeview', name='branchchangeview'),
+
     # url(r'^blog/', include('blog.urls')),
 
     url(r'^admin/', include(admin.site.urls)),
