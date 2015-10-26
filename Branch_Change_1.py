@@ -90,7 +90,9 @@ def swap(s,s1):
 def valid_shift(s,s1):
 		if (strength[s.current_department] -1 >= round(0.75 * capacity[s.current_department]) ) and ( strength[s1] + 1 <= round(1.1 * capacity[s1]) ):
 			return True
-		elif s.cpi == cut_offs[s1]:
+		if s.cpi >= 9 and ( strength[s1] + 1 <= round(1.1 * capacity[s1]) ):
+			return True
+		if s.cpi == cut_offs[s1]:
 			return True
 		return False
 
