@@ -1,6 +1,8 @@
 from django.shortcuts import render
 
 from .forms import InitialFormSignup
+from .forms import RegisterFormSignup
+
 # Create your views here.
 def homeview(request):
 	topic= "BRANCH CHANGE"
@@ -42,8 +44,7 @@ def registerview(request):
 	topic= "REGISTER AS A NEW USER" 
 	if request.method == "POST":
 		print  request.POST
-	form=InitialFormSignup(request.POST or None)
-
+	form=RegisterFormSignup(request.POST or None)
 	context ={
 		"xyz": topic,
 		"form": form,

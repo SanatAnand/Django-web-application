@@ -101,7 +101,7 @@ h1 {margin-bottom:-150px; text-align:center;font-size:48px; text-shadow:0 1px 0 
 	<div id="wrap">
 		<h1>{{ xyz }}</h1>
 		<div id='form_wrap'>
-			<form method='POST' action=''>{% csrf_token %}
+			<form method='POST' action="{% url 'homeview' %}">{% csrf_token %}
 			 {{form}}
 <!-- 			<form id="contact-form" action="javascript:alert('success!');">
  --><!-- 				<label for="email">USERNAME</label>

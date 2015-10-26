@@ -7,3 +7,11 @@ class InitialForm(models.Model):
 
 	def __unicode__(self):
 		return self
+
+class RegisterForm(models.Model):
+	username = models.CharField(max_length=100, blank=True, null=True)
+	password = models.CharField(max_length=100, blank=True, null=True)
+	confirmpassword = models.CharField(max_length=100, blank=True, null=True)
+
+	def __unicode__(self):
+		return self
