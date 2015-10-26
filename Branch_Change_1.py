@@ -8,26 +8,29 @@ strength = {}
 original_strength = {}
 students = []
 cut_offs = {}
+final_matrix = []
 
 class Student:
-        '''Class For the Students'''
-        old_department = ''
-        current_department = ''
-        cpi = 0
-        category = ''
-        pref_list = []
-        name = ''
-        roll_number = ''
-        present = None
-        def __init__(self,old_dept,curr_dept,given_cpi,cat,list_pref,given_name,given_roll_number):
-                self.old_department = old_dept
-                self.current_department = curr_dept
-                self.cpi = given_cpi
-                self.category = cat
-                self.pref_list = list_pref
-                self.name = given_name
-                self.roll_number = given_roll_number
-                self.present = True
+	'''Class For the Students'''
+	old_department = ''
+	current_department = ''
+	cpi = 0
+	category = ''
+	pref_list = []
+	name = ''
+	roll_number = ''
+	present = None
+	eligible = None
+	def __init__(self,old_dept,curr_dept,given_cpi,cat,list_pref,given_name,given_roll_number):
+		self.old_department = old_dept
+		self.current_department = curr_dept
+		self.cpi = given_cpi
+		self.category = cat
+		self.pref_list = list_pref
+		self.name = given_name
+		self.roll_number = given_roll_number
+		self.present = True
+		self.eligible = True
 
 with open("input_programmes.csv") as inputfile :
 	reader = csv.reader(inputfile)
@@ -47,16 +50,23 @@ with open("input_options.csv") as inputfile:
 		name = rows[1]
 		dept = rows[2]
 		cpi = float(rows[3])
-                category = rows[4]        
+		category = rows[4]
 		choices = (filter(None, rows[5:]))
 		temporary_student = Student(dept,dept,cpi,category,choices,name,roll_number)
-                if  ( category == 'GE' or category == 'OBC' ):
-                        if cpi >= 8.0 :
-                                students.append(temporary_student)
-                else :
-                        if cpi >= 7.0:
-                                students.append(temporary_student)
-                                
+		if  ( category == 'GE' or category == 'OBC' ):
+			if cpi >= 8.0 :
+				students.append(temporary_student)
+			else:
+				temporary_student.eligible = False
+				students.append(temporary_student)
+		else :
+			if cpi >= 7.0:
+				students.append(temporary_student)
+			else:
+				temporary_student.eligible = False
+				students.append(temporary_student)
+
+
 students.sort(key=lambda x: x.cpi, reverse=True)
 
 
@@ -112,7 +122,7 @@ while changes is not 0 and students is not []:
 		changes = 0
 		#print valid_shift(students[0],students[0].pref_list[0])
 		for stu in students:
-			if stu.present:
+			if stu.present and stu.eligible:
 				i=0
 				if valid_shift(stu,stu.pref_list[0]):
 					print stu.name
@@ -152,7 +162,17 @@ print len(students)
 print "======================================================================="
 
 for i in strength:
-        print i + " " + str(original_strength[i]) + " " + str(strength[i])
+	print i + " " + str(original_strength[i]) + " " + str(strength[i])
 
-#with open() as output_file:
-#        writer=csv.writer
+for stu in students:
+	if stu.old_department == stu.current_department:
+		stu.current_department = "Branch Unchanged"
+	if stu.eligible is False:
+		stu.current_department = "Ineligible"
+	final_matrix.append([stu.roll_number,stu.name,stu.old_department,stu.current_department])
+
+final_matrix.sort(key=lambda x: (x[0], x[1].lower(),x[2]))
+
+with open('output.csv', 'wb') as output_file:
+		writer = csv.writer(output_file, delimiter=',')
+		writer.writerows(final_matrix)
