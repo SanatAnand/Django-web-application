@@ -6,15 +6,15 @@ class InitialForm(models.Model):
 	password = models.CharField(max_length=100, blank=True, null=True)
 
 	def __unicode__(self):
-		return self
+		return self.username
 
 class RegisterForm(models.Model):
 	username = models.CharField(max_length=100, blank=True, null=True)
 	password = models.CharField(max_length=100, blank=True, null=True)
 	confirmpassword = models.CharField(max_length=100, blank=True, null=True)
 
-	def __unicode__(self):
-		return self
+	def __str__(self):
+		return str(self.username)
 
 class BranchChangeForm(models.Model):
 	name = models.CharField(max_length=100, blank=True, null=True)
@@ -26,4 +26,4 @@ class BranchChangeForm(models.Model):
 	)
 	department = models.CharField(max_length=1, choices=list_of_departments, default='CS')
 	def __unicode__(self):
-		return self
+		return self.name

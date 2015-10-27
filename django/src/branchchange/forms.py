@@ -1,10 +1,15 @@
 from django import forms
+from django.shortcuts import get_object_or_404
 
 from .models import InitialForm
 from .models import RegisterForm
 from .models import BranchChangeForm
 
+
 class InitialFormSignup(forms.ModelForm):
+	user = ''
+	passw = ''
+
 	class Meta:
 		model= InitialForm
 		widgets = {
@@ -12,6 +17,26 @@ class InitialFormSignup(forms.ModelForm):
 		}
 		fields = ['username','password']
 
+	def clean_username(self):
+		username= self.cleaned_data.get('username')
+		#print username
+		if ' ' in username:
+			raise forms.ValidationError('Username should not contain any spaces')
+		#if username #is taken
+		return username
+
+	def clean_password(self):
+		password= self.cleaned_data.get('password')
+		if ' ' in password:
+			raise forms.ValidationError('Password should not contain any spaces')
+		username= self.cleaned_data.get('username')
+		user = get_object_or_404(RegisterForm, username=username)
+		passw = user.password
+		if passw == password:
+			return password
+		else:
+			raise forms.ValidationError('Invalid Login Credentials')
+		
 
 class RegisterFormSignup(forms.ModelForm):
 	class Meta:
@@ -26,23 +51,27 @@ class RegisterFormSignup(forms.ModelForm):
 		username= self.cleaned_data.get('username')
 		#print username
 		if ' ' in username:
-			raise forms.ValidationError('Username should not contain any space')
+			raise forms.ValidationError('Username should not contain any spaces')
 		#if username #is taken
-		return name1
- 
+		return username
 
 	def clean_password(self):
 		password= self.cleaned_data.get('password')
 		if ' ' in password:
-			raise forms.ValidationError('Password should not contain any space')
+			raise forms.ValidationError('Password should not contain any spaces')
 		return password
 
 	def clean_confirmpassword(self):
+		password= self.cleaned_data.get('password')
 		confirmpassword= self.cleaned_data.get('confirmpassword')
-		
-		if password is not confirmpassword:
+		#print password
+		#print confirmpassword
+		if password == confirmpassword:
+			#print 'yo'
+			return confirmpassword
+		else:
+			#print 'yo2'
 			raise forms.ValidationError("The passwords do not match")
-		return confirmpassword
 
 class BranchChangeFormSignup(forms.ModelForm):
 	class Meta:

@@ -9,7 +9,6 @@ class InitialFormAdmin(admin.ModelAdmin):
 	class Meta:
 		model=InitialForm
 
-
 admin.site.register(InitialForm)
 admin.site.register(RegisterForm)
 admin.site.register(BranchChangeForm)
