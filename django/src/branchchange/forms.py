@@ -39,6 +39,7 @@ class RegisterFormSignup(forms.ModelForm):
 
 	def clean_confirmpassword(self):
 		confirmpassword= self.cleaned_data.get('confirmpassword')
+		
 		if password is not confirmpassword:
 			raise forms.ValidationError("The passwords do not match")
 		return confirmpassword

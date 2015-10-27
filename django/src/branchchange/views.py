@@ -19,15 +19,15 @@ def homeview(request):
 
 def userloginview(request):
 	topic= "USER LOGIN" 
+	form=InitialFormSignup(request.POST or None)
 	if request.method == "POST":
 		print  request.POST
-	form=InitialFormSignup(request.POST or None)
-
 	context ={
 		"xyz": topic,
 		"form": form,
 	}
-	return render(request, "userlogin.html",context)
+	if request.method== "GET":
+		return render(request, "userlogin.html",context)
 
 def adminloginview(request):
 	topic= "ADMIN LOGIN" 
@@ -43,24 +43,25 @@ def adminloginview(request):
 
 def registerview(request):
 	topic= "REGISTER AS A NEW USER" 
-	#if request.method == "POST":
-		#print  request.POST
 	form=RegisterFormSignup(request.POST or None)
 
 	context ={
 		"xyz": topic,
 		"form": form,
-	}
-	print "hiiiii"
+	}	
+	if request.method=="GET":
+		print "see ya"
+		return render(request, "register.html",context)
+
+	if request.method == "POST":
+		print "hiiiii"
+		if form.is_valid():
+			print "bye"
+			instance= form.save(commit=False)
+			username= form.cleaned_data.get("username")
+			print username
+			instance.save()
 	
-	if form.is_valid():
-		instance= form.save(commit=False)
-		username= form.cleaned_data.get("username")
-		print username
-		instance.save()
-
-
-	return render(request, "register.html",context)
 
 def branchchangeview(request):
 	topic= "WELCOME TO BRANCH CHANGE PORTAL 2015 " 
