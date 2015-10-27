@@ -50,4 +50,4 @@ class BranchChangeFormSignup(forms.ModelForm):
 		widgets = {
 			'password': forms.PasswordInput(),
 		}
-		fields = ['name','rollnumber','currentdept', 'cpi']
+		fields = ['name','rollnumber','currentdept', 'department','cpi'] 
