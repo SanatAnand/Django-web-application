@@ -4,6 +4,7 @@ from django.shortcuts import get_object_or_404
 from .models import InitialForm
 from .models import RegisterForm
 from .models import BranchChangeForm
+#from .models import InputStudentPreferrenceList
 
 
 class InitialFormSignup(forms.ModelForm):
@@ -98,5 +99,5 @@ class BranchChangeFormSignup(forms.ModelForm):
 			raise forms.ValidationError('Invalid CPI')
 		return cpi
 
-	
+
 

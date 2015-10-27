@@ -39,7 +39,7 @@ class BranchChangeForm(models.Model):
 		return self.name
 
 class BCAdmin(admin.ModelAdmin):
-	actions = ['download_csv']
+	actions = ['download_csv', 'import_csv']
 	def download_csv(self, request, queryset):
 		import csv
 		output_file = open('output.csv', 'wb')
@@ -48,5 +48,25 @@ class BCAdmin(admin.ModelAdmin):
 			writer.writerow([s.name, s.rollnumber, s.cpi, s.department,s.category,s.pref1,s.pref2,s.pref3,s.pref4,s.pref5])
 	download_csv.short_description = "Download CSV file for selected stats."
 
+class InputStudentPreferrenceList(models.Model):
+	input_file = models.FileField()#upload_to='/branchchange')
+
+	def __unicode__(self):
+		return 'File'
+
+
+	# def import_csv(self,request, queryset):
+	# 	# Full path and name to your csv file
+	# 	csv_filepathname="input_programmes.csv"
+	# 	import sys,os,csv
+	# 	dataReader = csv.reader(open(csv_filepathname), delimiter=',', quotechar='"')
+	# 	for row in dataReader:
+	# 		branchchangeentry = BranchChangeForm()
+	# 		branchchangeentry.name = row[1]
+	# 		branchchangeentry.rollnumber = row[0]
+	# 		branchchangeentry.department = row[2]
+	# 		branchchangeentry.cpi = row[3]
+	# 		branchchangeentry.category = rows[4]
+	# 		branchchangeentry.prefs1 = rows[5]
 
 admin.site.register(BranchChangeForm,BCAdmin)

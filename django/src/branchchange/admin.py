@@ -4,6 +4,7 @@ from django.contrib import admin
 from .models import InitialForm
 from .models import RegisterForm
 from .models import BranchChangeForm
+from .models import InputStudentPreferrenceList
 
 class InitialFormAdmin(admin.ModelAdmin):
 	class Meta:
@@ -12,3 +13,4 @@ class InitialFormAdmin(admin.ModelAdmin):
 admin.site.register(InitialForm)
 admin.site.register(RegisterForm)
 #admin.site.register(BranchChangeForm)
+admin.site.register(InputStudentPreferrenceList)
