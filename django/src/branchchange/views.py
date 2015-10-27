@@ -45,8 +45,12 @@ def adminloginview(request):
 		form = InitialFormSignup(request.POST)
 		if form.is_valid():
 			instance = form.save(commit=False)
-			instance.save()
-			return redirect('branchchange.views.homeview')
+			if instance.username == "admin" and instance.password=="admin123":
+				print instance.username
+				print instance.password
+				return redirect('branchchange.views.adminloggedinview')
+			else:
+				return redirect('branchchange.views.adminloginview')
 	else:
 		form = InitialFormSignup()
 
@@ -93,13 +97,16 @@ def branchchangeview(request):
 		"form": form,
 	}
 	return render(request,'branchchangeform.html', context)
-	# topic= "WELCOME TO BRANCH CHANGE PORTAL 2015 " 
-	# if request.method == "POST":
-	# 	print  request.POST
-	# form=BranchChangeFormSignup(request.POST or None)
 
-	# context ={
-	# 	"xyz": topic,
-	# 	"form": form,
-	# }
-	# return render(request, "branch.html",context)
+def adminloggedinview(request):
+	topic= "WELCOME ADMIN" 
+	#if request.method == "POST":
+	#	print  request.POST
+	form=InitialFormSignup(request.POST or None)
+
+	context ={
+		"xyz": topic,
+		"form": form,
+	}
+	return render(request, "adminpage.html",context)
+	

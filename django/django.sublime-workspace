@@ -51,6 +51,14 @@
 	},
 	"buffers":
 	[
+		{
+			"file": "src/branchchange/templates/adminlogin.html",
+			"settings":
+			{
+				"buffer_size": 3613,
+				"line_ending": "Windows"
+			}
+		}
 	],
 	"build_system": "",
 	"build_system_choices":
@@ -86,9 +94,8 @@
 	[
 		"/users/ug14/siddhant/Desktop/Branch_Change/django/src",
 		"/users/ug14/siddhant/Desktop/Branch_Change/django/src/branchchange",
-		"/users/ug14/siddhant/Desktop/Branch_Change/django/src/branchchange/migrations",
 		"/users/ug14/siddhant/Desktop/Branch_Change/django/src/branchchange/templates",
-		"/users/ug14/siddhant/Desktop/Branch_Change/django/src/django1"
+		"/users/ug14/siddhant/Desktop/Branch_Change/django/src/branchchange/templates/images"
 	],
 	"file_history":
 	[
@@ -159,8 +166,38 @@
 	"groups":
 	[
 		{
+			"selected": 0,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "src/branchchange/templates/adminlogin.html",
+					"semi_transient": true,
+					"settings":
+					{
+						"buffer_size": 3613,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3465,
+								3465
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1053.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
 			]
 		}
 	],

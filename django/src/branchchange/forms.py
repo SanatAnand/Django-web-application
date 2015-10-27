@@ -79,4 +79,24 @@ class BranchChangeFormSignup(forms.ModelForm):
 		widgets = {
 			'password': forms.PasswordInput(),
 		}
-		fields = ['name','rollnumber','currentdept', 'department','cpi'] 
+		fields = ['name','rollnumber','cpi','department','category','pref1','pref2','pref3','pref4','pref5']
+
+	def clean_rollnumber(self):
+		rollnumber= self.cleaned_data.get('rollnumber')
+		if ' ' in rollnumber:
+			raise forms.ValidationError('Invalid Roll Number')
+		if '15' in rollnumber:
+			return rollnumber
+		else:
+			raise forms.ValidationError('Invalid Roll Number')
+
+	def clean_cpi(self):
+		cpi= self.cleaned_data.get('cpi')
+		if cpi > 10.00 :
+			raise forms.ValidationError('Invalid CPI')
+		if cpi < 0.00 :
+			raise forms.ValidationError('Invalid CPI')
+		return cpi
+
+	
+
