@@ -1,3 +1,4 @@
+import csv
 from django.shortcuts import render
 from django.shortcuts import redirect
 
@@ -98,6 +99,8 @@ def branchchangeview(request):
 	}
 	return render(request,'branchchangeform.html', context)
 
+############################################################################# AFTER ADMIN LOGS IN
+
 def adminloggedinview(request):
 	topic= "WELCOME ADMIN" 
 	#if request.method == "POST":
@@ -109,4 +112,23 @@ def adminloggedinview(request):
 		"form": form,
 	}
 	return render(request, "adminpage.html",context)
+
+############################################################################# CREATE CSV
 	
+# def export(fields=None):
+# 	queryset = BranchChangeForm.objects.all()
+# 	model = qs.model
+# 	response = HttpResponse(mimetype='text/csv')
+# 	response['Content-Disposition'] = 'attachment; filename=input_options.csv')
+# 	writer = csv.writer(response)
+# 	for obj in qs:
+# 		row = []
+# 		for field in headers:
+# 			if field in headers:
+# 				val = getattr(obj, field)
+# 				if callable(val):
+# 					val = val()
+# 					row.append(val)
+# 					writer.writerow(row)
+# 	# Return CSV file to browser as download
+# 	return response
