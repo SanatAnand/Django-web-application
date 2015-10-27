@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib import admin
 
 # Create your models here.
 class InitialForm(models.Model):
@@ -22,13 +23,13 @@ class BranchChangeForm(models.Model):
 	#currentdept= models.CharField(max_length=100, blank=True, null=True)
 	cpi= models.DecimalField(max_digits=4, decimal_places=2, max_length=100)
 	list_of_departments = (
-		('CS', 'Computer Science'), ('EE', 'Electrical Engineering'), ('ME', 'Mechanical Engineering'), ('CE', 'Civil Engineering'), 
+		('A', 'Computer Science'), ('B', 'Electrical Engineering'), ('C', 'Mechanical Engineering'), ('D', 'Civil Engineering'), 
 	)
 	list_of_categories = (
-		('GE', 'GE'), ('OBC', 'OBC'), ('SC', 'SC'), ('ST', 'ST'), 
+		('A', 'GE'), ('B', 'OBC'), ('C', 'SC'), ('D', 'ST'), 
 	)
-	category = models.CharField(max_length=1, choices=list_of_categories, default='GE')
-	department = models.CharField(max_length=1, choices=list_of_departments, default='CS')
+	category = models.CharField(max_length=1, choices=list_of_categories, default='A')
+	department = models.CharField(max_length=1, choices=list_of_departments, default='A')
 	pref1=models.CharField(max_length=50, blank=True, null=True)
 	pref2=models.CharField(max_length=50, blank=True, null=True)
 	pref3=models.CharField(max_length=50, blank=True, null=True)
@@ -36,3 +37,16 @@ class BranchChangeForm(models.Model):
 	pref5=models.CharField(max_length=50, blank=True, null=True)
 	def __unicode__(self):
 		return self.name
+
+class BCAdmin(admin.ModelAdmin):
+	actions = ['download_csv']
+	def download_csv(self, request, queryset):
+		import csv
+		output_file = open('output.csv', 'wb')
+		writer = csv.writer(output_file)
+		for s in queryset:
+			writer.writerow([s.name, s.rollnumber, s.cpi, s.department,s.category,s.pref1,s.pref2,s.pref3,s.pref4,s.pref5])
+	download_csv.short_description = "Download CSV file for selected stats."
+
+
+admin.site.register(BranchChangeForm,BCAdmin)
