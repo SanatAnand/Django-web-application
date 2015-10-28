@@ -25,41 +25,89 @@ class BranchChangeForm(models.Model):
 	rollnumber= models.CharField(max_length=9, blank=True, null=True)
 	#currentdept= models.CharField(max_length=100, blank=True, null=True)
 	cpi= models.DecimalField(max_digits=4, decimal_places=2, max_length=100)
-	list_of_departments = (
-		('A', 'Computer Science'), ('B', 'Electrical Engineering'), ('C', 'Mechanical Engineering'), ('D', 'Civil Engineering'), 
-	)
 	list_of_categories = (
 		('A', 'GE'), ('B', 'OBC'), ('C', 'SC'), ('D', 'ST'), 
 	)
+
+	list1=[]
+	list2=[]
+
+	with open("input_programmes.csv") as inputfile:
+		reader = csv.reader(inputfile)
+		j=0
+		for rows in reader:
+			j+=1
+			list1.append(j)
+			list2.append(rows[0])
+
+	list_of_department_for_current = zip(list1,list2)
+	list1.append(0)
+	list2.append(None)
+	list_of_departments = zip(list1,list2)
+	
 	category = models.CharField(max_length=1, choices=list_of_categories, default='A')
-	department = models.CharField(max_length=1, choices=list_of_departments, default='A')
-	pref1=models.CharField(max_length=50, blank=True, null=True)
-	pref2=models.CharField(max_length=50, blank=True, null=True)
-	pref3=models.CharField(max_length=50, blank=True, null=True)
-	pref4=models.CharField(max_length=50, blank=True, null=True)
-	pref5=models.CharField(max_length=50, blank=True, null=True)
+	department = models.IntegerField(choices=list_of_department_for_current, default=1)
+
+	
+	pref1 = models.IntegerField(choices=list_of_department_for_current, default=1)
+	pref2 = models.IntegerField(choices=list_of_departments, default=0)
+	pref3 = models.IntegerField(choices=list_of_departments, default=0)
+	pref4 = models.IntegerField(choices=list_of_departments, default=0)
+	pref5 = models.IntegerField(choices=list_of_departments, default=0)
 	def __unicode__(self):
 		return self.name
 
 class BCAdmin(admin.ModelAdmin):
 	actions = ['download_csv']
 	def download_csv(self, request, queryset):
-		list_of_departments = {
-		'A': 'Computer Science', 'B': 'Electrical Engineering', 'C': 'Mechanical Engineering', 'D': 'Civil Engineering', 
-		}
+
+		list1=[]
+		list2=[]
+		
+		import csv
+		import os
+
+		with open("input_programmes.csv") as inputfile:
+			reader = csv.reader(inputfile)
+			j=0
+			for rows in reader:
+				j+=1
+				list1.append(j)
+				list2.append(rows[0])
+		list_of_departments = dict(zip(list1,list2))
 		list_of_categories = {
 			'A': 'GE', 'B': 'OBC', 'C': 'SC', 'D': 'ST', 
 		}
 		
-		import csv
-		import os
+		
 		BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 		output_file = open('input_options.csv', 'wb')
 		writer = csv.writer(output_file)
 		for s in queryset:
 			s.department=list_of_departments[s.department]
+			s.pref1=list_of_departments[s.pref1]
+			if s.pref2!= 0:
+				s.pref2=list_of_departments[s.pref2]
+			if s.pref3!= 0:
+				s.pref3=list_of_departments[s.pref3]
+			if s.pref4!= 0:
+				s.pref4=list_of_departments[s.pref4]
+			if s.pref5!= 0:
+				s.pref5=list_of_departments[s.pref5]
+			
 			s.category=list_of_categories[s.category]
-			writer.writerow([s.rollnumber,s.name, s.department,  s.cpi, s.category,s.pref1,s.pref2,s.pref3,s.pref4,s.pref5])
+			
+			row = [s.rollnumber,s.name, s.department,  s.cpi, s.category,s.pref1]
+			if s.pref2!=0:
+				row.append(s.pref2)
+			if s.pref3!= 0:
+				row.append(s.pref3)
+			if s.pref4!= 0:
+				row.append(s.pref4)
+			if s.pref5!= 0:
+				row.append(s.pref5)
+
+			writer.writerow(row)
 
 	download_csv.short_description = "Download CSV file for selected stats."
 

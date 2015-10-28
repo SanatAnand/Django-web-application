@@ -1,5 +1,5 @@
 from django import forms
-from django.shortcuts import get_object_or_404
+#from django.shortcuts import get_object
 
 from .models import InitialForm
 from .models import RegisterForm
@@ -31,12 +31,17 @@ class InitialFormSignup(forms.ModelForm):
 		if ' ' in password:
 			raise forms.ValidationError('Password should not contain any spaces')
 		username= self.cleaned_data.get('username')
-		user = get_object_or_404(RegisterForm, username=username)
+		#user = get_object(RegisterForm, username=username)
+		q= RegisterForm.objects.all().filter(username=username)
+		if not q.exists():
+			raise forms.ValidationError('Plese Enter a valid username')
+		else:
+			user = q[0]
 		passw = user.password
 		if passw == password:
 			return password
 		else:
-			raise forms.ValidationError('Invalid Login Credentials')
+			raise forms.ValidationError('Wrong Password')
 		
 
 class RegisterFormSignup(forms.ModelForm):
@@ -99,5 +104,56 @@ class BranchChangeFormSignup(forms.ModelForm):
 			raise forms.ValidationError('Invalid CPI')
 		return cpi
 
+	def clean_pref1(self):
+		department= self.cleaned_data.get('department')
+		pref1= self.cleaned_data.get('pref1')
+		if pref1 is department:
+			raise forms.ValidationError('Cannot change to your original branch')	
+		return pref1
 
+	def clean_pref2(self):
+		department= self.cleaned_data.get('department')
+		pref1= self.cleaned_data.get('pref1')
+		pref2= self.cleaned_data.get('pref2')
+		if (pref2 is department) or (pref2 is pref1):
+			raise forms.ValidationError('Choose a valid department')	
+		return pref2
 
+	def clean_pref3(self):
+		department= self.cleaned_data.get('department')
+		pref1= self.cleaned_data.get('pref1')
+		pref2= self.cleaned_data.get('pref2')
+		pref3= self.cleaned_data.get('pref3')
+		if pref3 is not 0:
+			if (pref3 is department) or (pref3 is pref1) or (pref3 is pref2):
+				raise forms.ValidationError('Choose a valid department')	
+			if pref2 is 0:
+				raise forms.ValidationError('First enter a higher preference')
+		return pref3
+
+	def clean_pref4(self):
+		department= self.cleaned_data.get('department')
+		pref1= self.cleaned_data.get('pref1')
+		pref2= self.cleaned_data.get('pref2')
+		pref3= self.cleaned_data.get('pref3')
+		pref4= self.cleaned_data.get('pref4')
+		if pref4 is not 0:
+			if (pref4 is department) or (pref4 is pref1) or (pref4 is pref2) or (pref4 is pref3):
+				raise forms.ValidationError('Choose a valid department')	
+			if (pref3 is 0) or (pref2 is 0):
+				raise forms.ValidationError('First enter a higher preference')
+		return pref4
+
+	def clean_pref5(self):
+		department= self.cleaned_data.get('department')
+		pref1= self.cleaned_data.get('pref1')
+		pref2= self.cleaned_data.get('pref2')
+		pref3= self.cleaned_data.get('pref3')
+		pref4= self.cleaned_data.get('pref4')
+		pref5= self.cleaned_data.get('pref5')
+		if pref5 is not 0:
+			if (pref5 is department) or (pref5 is pref1) or (pref5 is pref2) or (pref5 is pref3) or (pref5 is pref4):
+				raise forms.ValidationError('Choose a valid department')	
+			if (pref3 is 0) or (pref2 is 0) or (pref4 is 0):
+				raise forms.ValidationError('First enter a higher preference')
+		return pref5

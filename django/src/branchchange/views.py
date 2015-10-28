@@ -116,10 +116,6 @@ def adminloggedinview(request):
 ############################################################################# CREATE CSV
 
 def run_script(request):
-	print "YO"
-	# import math
-	# import csv
-	# import sys
 	changes = 1
 	capacity = {}
 	strength = {}
@@ -158,8 +154,6 @@ def run_script(request):
 			strength[rows[0]] = float(rows[2])
 			original_strength[rows[0]] = float(rows[2])
 			cut_offs[rows[0]] = float(11)
-			#waiting_list[rows[0]] = []
-			#outgoing_list[rows[0]] = []
 
 	with open("input_options.csv") as inputfile:
 		reader = csv.reader(inputfile)
@@ -188,16 +182,6 @@ def run_script(request):
 
 	students.sort(key=lambda x: x.cpi, reverse=True)
 
-
-	# for i in students:
-	# 	print i.old_department + " " + i.name + " " + str(i.cpi) + " " + i.category + " " + roll_number
-	# 	print i.pref_list
-	# print len(students)
-
-	print cut_offs
-
-	print "=================================================================="
-
 	def swap(s,s1):
 		strength[s.current_department]-=1
 		strength[s1]+=1
@@ -215,38 +199,12 @@ def run_script(request):
 				return True
 			return False
 
-	# def check_waiting_list(dept):
-	#         if waiting_list[dept] == []:
-	#                 return
-	#         else :
-	#                 while waiting_list[dept] is not [] and valid_shift(waiting_list[dept][0],dept):
-	#                         temp_dept = waiting_list[dept][0].current_department
-	#                         swap(waiting_list[dept][0],dept)
-	#                         temp_stu = waiting_list[dept][0]
-	#                         waiting_list[dept] = waiting_list[dept][1:]
-	#                         check_waiting_list(temp_dept)
-	#                 return
-
-	# def check_outgoing_list(dept):
-	#         if outgoing_list[dept] == []:
-	#                 return
-	#         else :
-	#                 while outgoing_list[dept] is not [] and valid_shift(outgoing_list[dept][0],dept):
-	#                         temp_dept = waiting_list[dept][0].current_department
-	#                         swap(waiting_list[dept][0],dept)
-	#                         temp_stu = waiting_list[dept][0]
-	#                         waiting_list[dept] = waiting_list[dept][1:]
-	#                         check_waiting_list(temp_dept)
-	#                 return
-
 	while changes is not 0 and students is not []:
 			changes = 0
-			#print valid_shift(students[0],students[0].pref_list[0])
 			for stu in students:
 				if stu.present and stu.eligible:
 					i=0
 					if valid_shift(stu,stu.pref_list[0]):
-						print stu.name
 						swap(stu,stu.pref_list[0])
 						changes += 1
 						stu.present = False
@@ -255,35 +213,7 @@ def run_script(request):
 					if i is not len(stu.pref_list):
 							swap(stu,stu.pref_list[i])
 							changes += 1
-			print "========================================================================"
-			print cut_offs
-			print "========================================================================"
 
-
-
-	# for stu in students:
-	#         i=0
-	#         while i< len(stu.pref_list) and not valid_shift(stu,stu.pref_list[i]):
-	#                 #print stu.name
-	#                 waiting_list[stu.pref_list[i]].append(stu)
-	#                 i +=1
-	#         if i is not len(stu.pref_list):
-	#                 temp_department = stu.current_department
-	#                 swap(stu,stu.pref_list[i])
-	#                 check_waiting_list(temp_department)
-	#         outgoing_list[stu.current_department].append(stu)
-	#         #print stu.name + ' ' + stu.old_department + ' ' + stu.current_department + ' '
-	#         #print stu.pref_list
-
-	for i in students:
-		print i.old_department + " " + i.name + " " + i.current_department + ' ' + str(i.cpi) + " " + i.category + " " + roll_number
-		print i.pref_list
-	print len(students)
-
-	print "======================================================================="
-
-	for i in strength:
-		print i + " " + str(original_strength[i]) + " " + str(strength[i])
 	dept_matrix.append(["Program", "Cutoff","Santioned Strength","Original Strength","Final Strength"])
 	for dep in cut_offs:
 		if(int(cut_offs[dep]) is int(11)):
@@ -306,22 +236,4 @@ def run_script(request):
 	with open('output.csv', 'wb') as output_file:
 			writer = csv.writer(output_file, delimiter=',')
 			writer.writerows(final_matrix)
-	return render(request, "adminpage.html")
-	
-# def export(fields=None):
-# 	queryset = BranchChangeForm.objects.all()
-# 	model = qs.model
-# 	response = HttpResponse(mimetype='text/csv')
-# 	response['Content-Disposition'] = 'attachment; filename=input_options.csv')
-# 	writer = csv.writer(response)
-# 	for obj in qs:
-# 		row = []
-# 		for field in headers:
-# 			if field in headers:
-# 				val = getattr(obj, field)
-# 				if callable(val):
-# 					val = val()
-# 					row.append(val)
-# 					writer.writerow(row)
-# 	# Return CSV file to browser as download
-# 	return response
+	return render(request, "homepage.html")
