@@ -1,6 +1,9 @@
 from django.db import models
 from django.contrib import admin
-
+import math
+import csv
+import sys
+	
 # Create your models here.
 class InitialForm(models.Model):
 	username = models.CharField(max_length=100, blank=True, null=True)
@@ -41,13 +44,23 @@ class BranchChangeForm(models.Model):
 class BCAdmin(admin.ModelAdmin):
 	actions = ['download_csv']
 	def download_csv(self, request, queryset):
+		list_of_departments = {
+		'A': 'Computer Science', 'B': 'Electrical Engineering', 'C': 'Mechanical Engineering', 'D': 'Civil Engineering', 
+		}
+		list_of_categories = {
+			'A': 'GE', 'B': 'OBC', 'C': 'SC', 'D': 'ST', 
+		}
+		
 		import csv
 		import os
 		BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-		output_file = open('output.csv', 'wb')
+		output_file = open('input_options.csv', 'wb')
 		writer = csv.writer(output_file)
 		for s in queryset:
-			writer.writerow([s.name, s.rollnumber, s.cpi, s.department,s.category,s.pref1,s.pref2,s.pref3,s.pref4,s.pref5])
+			s.department=list_of_departments[s.department]
+			s.category=list_of_categories[s.category]
+			writer.writerow([s.rollnumber,s.name, s.department,  s.cpi, s.category,s.pref1,s.pref2,s.pref3,s.pref4,s.pref5])
+
 	download_csv.short_description = "Download CSV file for selected stats."
 
 class InputStudentPreferrenceList(models.Model):
@@ -59,12 +72,22 @@ class InputStudentPreferrenceList(models.Model):
 	def __unicode__(self):
 		return 'File'
 
+class InputBranchList(models.Model):
+	import os
+	BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+	#SAVE_DIR = os.path.dirname(BASE_DIR)
+	input_file = models.FileField(upload_to=BASE_DIR)
+
+	def __unicode__(self):
+		return 'File'
+
+
 class RunBranchAllotmentAlgorithm(admin.ModelAdmin):
 	actions = ['run_script']
 	def run_script(self,request,queryset):
-		import math
-		import csv
-		import sys
+		# import math
+		# import csv
+		# import sys
 
 		changes = 1
 		capacity = {}
@@ -256,3 +279,4 @@ class RunBranchAllotmentAlgorithm(admin.ModelAdmin):
 
 admin.site.register(BranchChangeForm,BCAdmin)
 admin.site.register(InputStudentPreferrenceList, RunBranchAllotmentAlgorithm)
+admin.site.register(InputBranchList)
