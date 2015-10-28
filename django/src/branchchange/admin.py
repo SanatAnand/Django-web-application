@@ -13,4 +13,4 @@ class InitialFormAdmin(admin.ModelAdmin):
 admin.site.register(InitialForm)
 admin.site.register(RegisterForm)
 #admin.site.register(BranchChangeForm)
-admin.site.register(InputStudentPreferrenceList)
+#admin.site.register(InputStudentPreferrenceList)
