@@ -6,7 +6,6 @@ from .models import RegisterForm
 from .models import BranchChangeForm
 from .models import InputStudentPreferrenceList
 from .models import BCAdmin
-from .models import RunBranchAllotmentAlgorithm
 
 class InitialFormAdmin(admin.ModelAdmin):
 	class Meta:
@@ -16,9 +15,6 @@ class BCAdminAdmin(admin.ModelAdmin):
 	class Meta:
 		model=BCAdmin
 
-class RunBranchAllotmentAlgorithmAdmin(admin.ModelAdmin):
-	class Meta:
-		model=RunBranchAllotmentAlgorithm
 
 
 
