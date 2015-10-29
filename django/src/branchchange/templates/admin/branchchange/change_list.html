@@ -4,11 +4,14 @@
 
     {{ block.super }}
 
-    <li>
-		<a href="{{ STATIC_URL }}/output.csv">Download</a>
+	<li>	
+		<a href="run">Run The Branch Change Algorithm</a>
 	</li>
 	<li>
-		<a href="run">Run The Branch Change Algorithm</a>
-    </li>
+		<a href="{{ STATIC_URL }}/output_change_list">Download Final List</a>
+	</li>
+	<li>
+		<a href="{{ STATIC_URL }}/output_list_stats">Download Final Stats</a>
+	</li>
 
 {% endblock %}

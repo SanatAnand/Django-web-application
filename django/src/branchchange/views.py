@@ -241,7 +241,22 @@ def run_script(request):
 	return render(request, "homepage.html")
 
 
-def download_file(request):
-	response = HttpResponse(content_type='application/zip')
-	response['Content-Disposition'] = 'attachment; filename=output.csv'
+def download_list_file(request):
+	response = HttpResponse(content_type='text/csv')
+	response['Content-Disposition'] = 'attachment; filename=branch_change_list.csv'
+	writer = csv.writer(response)
+	with open("output.csv") as inputfile:
+			reader = csv.reader(inputfile)
+			for rows in reader:
+				writer.writerow(rows)
+	return response
+
+def download_stats_file(request):
+	response = HttpResponse(content_type='text/csv')
+	response['Content-Disposition'] = 'attachment; filename=branch_change_stats.csv'
+	writer = csv.writer(response)
+	with open("stats.csv") as inputfile:
+			reader = csv.reader(inputfile)
+			for rows in reader:
+				writer.writerow(rows)
 	return response
