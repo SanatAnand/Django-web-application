@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib import admin
+from django.core.validators import MaxValueValidator
+from django.core.validators import MinValueValidator
 import math
 import csv
 import sys
@@ -24,9 +26,9 @@ class BranchChangeForm(models.Model):
 	name = models.CharField(max_length=100, blank=True, null=True)
 	rollnumber= models.CharField(max_length=9, blank=True, null=True)
 	#currentdept= models.CharField(max_length=100, blank=True, null=True)
-	cpi= models.DecimalField(max_digits=4, decimal_places=2, max_length=100)
+	cpi= models.DecimalField(max_digits=4, decimal_places=2, max_length=100, validators=[MinValueValidator(0.00),MaxValueValidator(10.00)])
 	list_of_categories = (
-		('A', 'GE'), ('B', 'OBC'), ('C', 'SC'), ('D', 'ST'), 
+		('A', 'GE'), ('B', 'OBC'), ('C', 'SC'), ('D', 'ST'), ('E', 'PwD')
 	)
 
 	list1=[]

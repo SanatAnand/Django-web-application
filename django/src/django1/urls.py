@@ -10,7 +10,7 @@ urlpatterns = [
     url(r'^home/userlogin/portal$', 'branchchange.views.branchchangeview', name='branchchangeview'),
     url(r'^home/adminlogin/loggedin$', 'branchchange.views.adminloggedinview', name='adminloggedinview'),
 	url(r'^admin/branchchange/branchchangeform/run/$', 'branchchange.views.run_script', name='run_script'),
-
+	url(r'^output.csv$', 'branchchange.views.download_file', name='Download Output'),
     # url(r'^blog/', include('blog.urls')),
 
     url(r'^admin/', include(admin.site.urls)),

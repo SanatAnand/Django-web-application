@@ -1,6 +1,8 @@
 import csv
 from django.shortcuts import render
 from django.shortcuts import redirect
+from django.http import HttpResponse
+from django.core.servers.basehttp import FileWrapper
 
 from .forms import InitialFormSignup
 from .forms import RegisterFormSignup
@@ -237,3 +239,9 @@ def run_script(request):
 			writer = csv.writer(output_file, delimiter=',')
 			writer.writerows(final_matrix)
 	return render(request, "homepage.html")
+
+
+def download_file(request):
+	response = HttpResponse(content_type='application/zip')
+	response['Content-Disposition'] = 'attachment; filename=output.csv'
+	return response
