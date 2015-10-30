@@ -238,7 +238,7 @@ def run_script(request):
 	with open('output.csv', 'wb') as output_file:
 			writer = csv.writer(output_file, delimiter=',')
 			writer.writerows(final_matrix)
-	return render(request, "homepage.html")
+	return render(request, "blank_admin.html")
 
 
 def download_list_file(request):
@@ -459,4 +459,5 @@ def run_challenge_script(request):
 	with open('output.csv', 'wb') as output_file:
 			writer = csv.writer(output_file, delimiter=',')
 			writer.writerows(final_matrix)
-	return render(request, "homepage.html")
+	return render(request, "blank_admin.html")
+
