@@ -23,8 +23,8 @@ class RegisterForm(models.Model):
 		return str(self.username)
 
 class BranchChangeForm(models.Model):
-	name = models.CharField(max_length=100, blank=True, null=True)
-	rollnumber= models.CharField(max_length=9, blank=True, null=True)
+	name = models.CharField(max_length=100, blank=False, null=True)
+	rollnumber= models.CharField(max_length=9, blank=False, null=True)
 	#currentdept= models.CharField(max_length=100, blank=True, null=True)
 	cpi= models.DecimalField(max_digits=4, decimal_places=2, max_length=100, validators=[MinValueValidator(0.00),MaxValueValidator(10.00)])
 	list_of_categories = (

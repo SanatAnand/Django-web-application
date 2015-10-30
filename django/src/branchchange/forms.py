@@ -4,6 +4,11 @@ from django import forms
 from .models import InitialForm
 from .models import RegisterForm
 from .models import BranchChangeForm
+
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Submit, Layout, Field, ButtonHolder, Div
+from crispy_forms.bootstrap import (
+    PrependedText, PrependedAppendedText, FormActions)
 #from .models import InputStudentPreferrenceList
 
 
@@ -42,6 +47,17 @@ class InitialFormSignup(forms.ModelForm):
 			return password
 		else:
 			raise forms.ValidationError('Wrong Password')
+
+	helper = FormHelper()
+	helper.form_method = 'POST'
+	helper.form_class = 'form-horizontal'
+	helper.label_class = 'col-lg-2'
+	helper.field_class = 'col-lg-8'
+	helper.layout = Layout(
+		PrependedText('username','@'),
+		PrependedText('password', '*'),
+		)
+	helper.add_input(Submit('login', 'login', css_class='btn-primary'))
 		
 
 class RegisterFormSignup(forms.ModelForm):
@@ -81,6 +97,16 @@ class RegisterFormSignup(forms.ModelForm):
 		else:
 			#print 'yo2'
 			raise forms.ValidationError("The passwords do not match")
+	helper = FormHelper()
+	helper.form_method = 'POST'
+	helper.form_class = 'form-horizontal'
+	helper.label_class = 'col-lg-2'
+	helper.field_class = 'col-lg-8'
+	helper.layout = Layout(
+		PrependedText('username','@', active=True), PrependedText('password','*'), PrependedText('confirmpassword','*')
+                )
+	helper.add_input(Submit('Submit', 'Submit', css_class='btn-primary'))
+
 
 class BranchChangeFormSignup(forms.ModelForm):
 	class Meta:
@@ -160,3 +186,14 @@ class BranchChangeFormSignup(forms.ModelForm):
 			if (pref3 is 0) or (pref2 is 0) or (pref4 is 0):
 				raise forms.ValidationError('First enter a higher preference')
 		return pref5
+
+	helper = FormHelper()
+	helper.form_method = 'POST'
+	helper.form_class = 'form-horizontal'
+	helper.label_class = 'col-lg-2'
+	helper.field_class = 'col-lg-8'
+	helper.layout = Layout(
+		'name',PrependedText('rollnumber','#', active=True), PrependedAppendedText('cpi','#',''),Div('department', css_class="bigdivs"),'category','pref1','pref2','pref3','pref4','pref5'
+                )
+	helper.add_input(Submit('Submit', 'Submit', css_class='btn-primary'))
+
