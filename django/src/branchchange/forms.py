@@ -190,8 +190,8 @@ class BranchChangeFormSignup(forms.ModelForm):
 	helper = FormHelper()
 	helper.form_method = 'POST'
 	helper.form_class = 'form-horizontal'
-	helper.label_class = 'col-lg-2'
-	helper.field_class = 'col-lg-8'
+	helper.label_class = 'col-lg-4'
+	helper.field_class = 'col-lg-4'
 	helper.layout = Layout(
 		'name',PrependedText('rollnumber','#', active=True), PrependedAppendedText('cpi','#',''),Div('department', css_class="bigdivs"),'category','pref1','pref2','pref3','pref4','pref5'
                 )
