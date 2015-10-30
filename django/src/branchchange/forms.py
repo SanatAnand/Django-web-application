@@ -59,6 +59,9 @@ class RegisterFormSignup(forms.ModelForm):
 		if ' ' in username:
 			raise forms.ValidationError('Username should not contain any spaces')
 		#if username #is taken
+		q= RegisterForm.objects.all().filter(username=username)
+		if q.exists():
+			raise forms.ValidationError('Already a registered user. Try another username')
 		return username
 
 	def clean_password(self):
